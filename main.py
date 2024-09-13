@@ -6,9 +6,9 @@ def reposToFile(file_path):
     print('Finding git repos')
     command = f"find ~ -maxdepth 5 -name \".git\" -type d  > {file_path}"
     os.system(command)
-    # os.system(f"sed -i '/cache/d' {file_path}")
-    # os.system(f"sed -i '/yay/d' {file_path}")
-    # os.system(f"sed -i 's/.git//g' {file_path}")
+    os.system(f"sed -i '/cache/d' {file_path}")
+    os.system(f"sed -i '/yay/d' {file_path}")
+    os.system(f"sed -i 's/.git//g' {file_path}")
     os.system(f"bat {file_path}")
 def gitCommit():
     print('Committing')
@@ -58,6 +58,6 @@ def gitPull(file_path):
 
 def menu():
     reposToFile(file_path)
-    # gitPush(file_path)
-    # gitPull(file_path)
+    gitPush(file_path)
+    gitPull(file_path)
 menu()
