@@ -1,9 +1,10 @@
 import os
 from git import Repo
+from rich import print
 file_path = os.path.join(os.path.expanduser('~'), 'Downloads', 'repos.txt')
 os.system(f"rm {file_path}")
 def reposToFile(file_path):
-    print('Finding git repos')
+    print('[green]Finding git repos')
     command = f"find ~ -maxdepth 5 -name \".git\" -type d  > {file_path}"
     os.system(command)
     os.system(f"sed -i '/cache/d' {file_path}")
@@ -11,16 +12,16 @@ def reposToFile(file_path):
     os.system(f"sed -i 's/.git//g' {file_path}")
     os.system(f"bat {file_path}")
 def gitCommit():
-    print('Committing')
-    print('1) Lazygit')
-    print('2) Commit')
+    print('[blue]Committing')
+    print('[green]1) Lazygit')
+    print('[blue]2) Commit')
     choice = input('Enter your choice: ')
     repo = Repo('.')
     if choice == '1':
         os.system('lazygit')
         gitCommit()
     elif choice == '2':
-        print('Commit')
+        print('[green]Commit')
         commit_message = input('Enter commit message: ')
         repo.git.add(update=True)
         repo.git.commit('-m', commit_message)
@@ -30,7 +31,7 @@ def gitCommit():
         print('Invalid Choice')
         gitCommit()
 def gitPush(file_path):
-    print('Pushing')
+    print('[blue]Pushing')
     with open(file_path, 'r') as f:
         for line in f:
             line = line.strip()
@@ -40,7 +41,7 @@ def gitPush(file_path):
                 print(os.getcwd())
                 gitCommit()
 def gitPull(file_path):
-    print('Pulling')
+    print('[green]Pulling')
     with open(file_path, 'r') as f:
         for line in f:
             line = line.strip()
