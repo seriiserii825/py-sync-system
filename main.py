@@ -25,5 +25,5 @@ def menu():
         gitPull(file_path)
     else:
         console.print("[red]Invalid option. Please try again.")
-        menu()
+        exit()
 menu()
