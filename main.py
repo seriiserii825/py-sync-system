@@ -21,7 +21,6 @@ def menu():
     action = console.input("[cyan]What would you like to do? ")
     if action == "push":
         gitPush(file_path)
-        menu()
     elif action == "pull":
         gitPull(file_path)
     else:
