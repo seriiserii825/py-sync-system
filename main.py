@@ -18,6 +18,4 @@ def menu():
     else:
         console.print("[red]Invalid option. Please try again.")
         menu()
-    gitPush(file_path)
-    gitPull(file_path)
 menu()
