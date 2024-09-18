@@ -2,6 +2,7 @@ import os
 from rich.console import Console
 
 from libs.richTable import richTable
+from modules.getCommits import getCommits
 from modules.gitPull import gitPull
 from modules.gitPush import gitPush
 from modules.reposToFile import reposToFile
@@ -14,6 +15,7 @@ def menu():
     table_title = "Git Repository Manager"
     table_columns = ["Option", "Description"]
     table_rows = [
+        ["[blue]commits[/]", "Push changes to the remote repository."],
         ["[blue]push[/]", "Push changes to the remote repository."],
         ["[red]pull[/]", "Pull changes from the remote repository."]
     ]
@@ -23,6 +25,8 @@ def menu():
         gitPush(file_path)
     elif action == "pull":
         gitPull(file_path)
+    elif action == "commits":
+        getCommits(file_path)
     else:
         console.print("[red]Invalid option. Please try again.")
         exit()
