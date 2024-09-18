@@ -1,6 +1,7 @@
 import os
 
 def reposToFile(file_path):
+    os.system(f"rm {file_path}")
     print('[green]Finding git repos')
     command = f"find ~ -maxdepth 8 -name \".git\" -type d  > {file_path}"
     os.system(command)
