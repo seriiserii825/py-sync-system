@@ -11,18 +11,12 @@ def getCommits(file_path):
             os.chdir(line)
             today_date = datetime.today().strftime('%Y-%m-%d')
 
-            # show just commit message
+            # show user, time when commit was done, and commit message
             command = [
                     "git", "log",
                     f'--since={today_date} 00:00:00', f'--until={today_date} 23:59:59',
-                    '--pretty=format:%s'
+                    '--pretty=format:%an: %cd: %s'
                     ]
-            # command = [
-            #         "git", "log",
-            #         f'--since={today_date} 00:00:00', f'--until={today_date} 23:59:59',
-            #         '--pretty=format:%h - %an: %s'
-            #         ]
-
             result = subprocess.run(command, capture_output=True, text=True)
 
             if result.stdout:

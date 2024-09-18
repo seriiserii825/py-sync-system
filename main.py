@@ -15,7 +15,7 @@ def menu():
     table_title = "Git Repository Manager"
     table_columns = ["Option", "Description"]
     table_rows = [
-        ["[blue]commits[/]", "Push changes to the remote repository."],
+        ["[green]commits[/]", "Push changes to the remote repository."],
         ["[blue]push[/]", "Push changes to the remote repository."],
         ["[red]pull[/]", "Pull changes from the remote repository."]
     ]
