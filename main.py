@@ -2,31 +2,29 @@ import os
 from rich.console import Console
 
 from libs.richTable import richTable
-from modules.getCommits import getCommits
 from modules.gitPull import gitPull
 from modules.gitPush import gitPush
-from modules.reposToFile import reposToFile
+from modules.syncGit import syncGit
 
 file_path = os.path.join(os.path.expanduser('~'), 'Downloads', 'repos.txt')
 console = Console()
 
 def menu():
-    reposToFile(file_path)
-    table_title = "Git Repository Manager"
+    table_title = "Choose an option"
     table_columns = ["Option", "Description"]
     table_rows = [
-        ["[green]commits[/]", "Push changes to the remote repository."],
-        ["[blue]push[/]", "Push changes to the remote repository."],
-        ["[red]pull[/]", "Pull changes from the remote repository."]
+        ["[green]1) Sync[/]", "Sync all repositories."],
+        ["[blue]2) Push[/]", "Push changes to the remote repository."],
+        ["[yellow]3) Pull[/]", "Pull changes from the remote repository."]
     ]
     richTable(table_title, table_columns, table_rows)
     action = console.input("[cyan]What would you like to do? ")
-    if action == "push":
-        gitPush(file_path)
+    if action == "1":
+        syncGit()
     elif action == "pull":
-        gitPull(file_path)
+        gitPush()
     elif action == "commits":
-        getCommits(file_path)
+        gitPull()
     else:
         console.print("[red]Invalid option. Please try again.")
         exit()

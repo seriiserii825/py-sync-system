@@ -1,18 +1,41 @@
 import os
 
-from git import Repo
-def gitPull(file_path):
-    print('[green]Pulling')
-    with open(file_path, 'r') as f:
-        for line in f:
-            line = line.strip()
-            os.chdir(line)
-            repo = Repo('.')
-            print(os.getcwd())
-            command = f"git remote update && git status -uno | grep -q 'Your branch is behind'"
-            result = os.system(command)
-            if result == 0:
-                print('Pulling')
-                repo.git.pull()
-    # rm = f"rm {file_path}"
-    # os.system(rm)
+from modules.checkIfPullNeeded import checkIfPullNeeded
+
+def pipInstall():
+    if not os.path.exists('venv'):
+        os.system('python3 -m venv venv')
+        os.system('source venv/bin/activate')
+        os.system('python3 -m pip install --upgrade pip')
+        os.system('python3 -m pip install -r requirements.txt')
+        os.system('deactivate')
+    else:
+        os.system('source venv/bin/activate')
+        os.system('python3 -m pip install -r requirements.txt')
+        os.system('deactivate')
+
+def gitModules():
+    os.system('git submodule init')
+    os.system('git submodule update')
+    # get submodule dirs from .gitmodules
+    with open('.gitmodules') as f:
+        lines = f.readlines()
+        for line in lines:
+            if 'path' in line:
+                path = line.split('=')[1].strip()
+                os.chdir(path)
+                gitPull()
+                os.chdir('..')
+
+def gitPull():
+    result = checkIfPullNeeded()
+    if result:
+        os.system('git pull')
+        # check for python files
+        if os.path.exists('requirements.txt'):
+            pipInstall()
+        # check for gitmodules
+        if os.path.exists('.gitmodules'):
+            gitModules()
+
+
