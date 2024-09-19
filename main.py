@@ -2,6 +2,7 @@ import os
 from rich.console import Console
 
 from libs.richTable import richTable
+from modules.gitClone import gitClone
 from modules.gitPull import gitPull
 from modules.gitPush import gitPush
 from modules.syncGit import syncGit
@@ -14,17 +15,20 @@ def menu():
     table_columns = ["Option", "Description"]
     table_rows = [
         ["[green]1) Sync[/]", "Sync all repositories."],
-        ["[blue]2) Push[/]", "Push changes to the remote repository."],
-        ["[yellow]3) Pull[/]", "Pull changes from the remote repository."]
+        ["[blue]2) Push[/]", "Push"],
+        ["[yellow]3) Pull[/]", "Pull"],
+        ["[yellow]4) Clone[/]", "Clone"],
     ]
     richTable(table_title, table_columns, table_rows)
     action = console.input("[cyan]What would you like to do? ")
     if action == "1":
         syncGit()
-    elif action == "pull":
+    elif action == "2":
         gitPush()
-    elif action == "commits":
+    elif action == "3":
         gitPull()
+    elif action == "4":
+        gitClone()
     else:
         console.print("[red]Invalid option. Please try again.")
         exit()
