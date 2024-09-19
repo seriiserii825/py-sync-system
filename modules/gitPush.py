@@ -2,8 +2,9 @@ import os
 import sys
 from rich import print
 from rich.prompt import Prompt
-from git import Repo
 
+from modules.checkForGitDir import checkForGitDir
+from modules.checkIfPushNeeded import checkIfPushNeeded
 from utils.decryptFiles import decryptFiles
 from utils.encryptFiles import encryptFiles
 from utils.tableMenu import tableMenu
@@ -51,15 +52,14 @@ def gitPush():
             print('[red]Invalid option')
             gitPush()
 
-if os.path.exists('.gpgrc'):
-    repo = Repo('.')
-    if repo.is_dirty() or len(repo.untracked_files) > 0:
-        gitPush()
+    if os.path.exists('.gpgrc'):
+        if checkIfPushNeeded():
+            gitPush()
+        else:
+            print('[red]No changes to commit')
     else:
-        print('[red]No changes to commit')
-else:
-    repo = Repo('.')
-    if repo.is_dirty() or len(repo.untracked_files) > 0:
-        gitPush()
-    else:
-        print('[red]No changes to commit')
+        if checkForGitDir():
+            if checkIfPushNeeded():
+                gitPush()
+            else:
+                print('[red]No changes to commit')

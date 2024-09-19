@@ -1,5 +1,6 @@
 import os
 
+from modules.checkForGitDir import checkForGitDir
 from modules.checkIfPullNeeded import checkIfPullNeeded
 
 def pipInstall():
@@ -28,14 +29,15 @@ def gitModules():
                 os.chdir('..')
 
 def gitPull():
-    result = checkIfPullNeeded()
-    if result:
-        os.system('git pull')
-        # check for python files
-        if os.path.exists('requirements.txt'):
-            pipInstall()
-        # check for gitmodules
-        if os.path.exists('.gitmodules'):
-            gitModules()
+    if checkForGitDir():
+        result = checkIfPullNeeded()
+        if result:
+            os.system('git pull')
+            # check for python files
+            if os.path.exists('requirements.txt'):
+                pipInstall()
+            # check for gitmodules
+            if os.path.exists('.gitmodules'):
+                gitModules()
 
 
