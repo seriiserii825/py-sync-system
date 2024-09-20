@@ -23,8 +23,8 @@ def gitModules():
         lines = f.readlines()
         for line in lines:
             if 'path' in line:
-                if line == 'libs':
-                    path = line.split('=')[1].strip()
+                path = line.split('=')[1].strip()
+                if path == 'libs':
                     os.chdir(path)
                     gitPull()
                     os.chdir('..')
