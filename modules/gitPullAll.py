@@ -1,6 +1,7 @@
 import os
 
 from modules.checkIfPullNeeded import checkIfPullNeeded
+from modules.gitPull import gitPull
 def gitPullAll(file_path):
     print('[green]Pulling')
     with open(file_path, 'r') as f:
@@ -9,4 +10,4 @@ def gitPullAll(file_path):
             os.chdir(line)
             result = checkIfPullNeeded()
             if result:
-                os.system('git pull')
+                gitPull()

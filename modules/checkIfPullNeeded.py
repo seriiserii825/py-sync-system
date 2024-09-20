@@ -1,6 +1,8 @@
 import subprocess
+import os
 from rich import print
 def checkIfPullNeeded():
+    print(f"[green]Pulling from {os.getcwd()}")
     # Fetch the latest changes from the remote
     subprocess.run(['git', 'fetch'], check=True)
     

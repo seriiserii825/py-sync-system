@@ -30,7 +30,6 @@ def gitModules():
 
 def gitPull():
     if checkForGitDir():
-        print(f'[blue]Pull in {os.getcwd}')
         result = checkIfPullNeeded()
         if result:
             os.system('git pull')
