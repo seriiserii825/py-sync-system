@@ -4,8 +4,11 @@ from rich import print
 def checkIfPullNeeded():
     print(f"[green]Pulling from {os.getcwd()}")
     # Fetch the latest changes from the remote
-    subprocess.run(['git', 'fetch'], check=True)
+    result = subprocess.run(['git', 'fetch'], check=True)
     
+    if result.returncode != 0:
+        print("[red]Error fetching the latest changes from the remote.")
+        return False
     # Get the local and remote head commit hashes
     local_commit = subprocess.check_output(['git', 'rev-parse', 'HEAD']).strip()
     remote_commit = subprocess.check_output(['git', 'rev-parse', '@{u}']).strip()
