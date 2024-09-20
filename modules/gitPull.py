@@ -1,5 +1,5 @@
 import os
-
+from rich import print
 from modules.checkForGitDir import checkForGitDir
 from modules.checkIfPullNeeded import checkIfPullNeeded
 
@@ -30,6 +30,7 @@ def gitModules():
 
 def gitPull():
     if checkForGitDir():
+        print(f'[blue]Pull in {os.getcwd}')
         result = checkIfPullNeeded()
         if result:
             os.system('git pull')
