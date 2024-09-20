@@ -36,14 +36,14 @@ def gitModules():
 
 def gitPull():
     if checkForGitDir():
+        # check for gitmodules
+        if os.path.exists('.gitmodules'):
+            gitModules()
         result = checkIfPullNeeded()
         if result:
             os.system('git pull')
             # check for python files
             if os.path.exists('requirements.txt'):
                 pipInstall()
-            # check for gitmodules
-            if os.path.exists('.gitmodules'):
-                gitModules()
 
 
