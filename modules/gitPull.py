@@ -23,10 +23,14 @@ def gitModules():
         lines = f.readlines()
         for line in lines:
             if 'path' in line:
-                path = line.split('=')[1].strip()
-                os.chdir(path)
-                gitPull()
-                os.chdir('..')
+                if line == 'libs':
+                    path = line.split('=')[1].strip()
+                    os.chdir(path)
+                    gitPull()
+                    os.chdir('..')
+                else:
+                    print(f'[red]Error: libs not found')
+                    os.chdir('..')
 
 def gitPull():
     if checkForGitDir():
