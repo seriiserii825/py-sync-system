@@ -19,6 +19,8 @@ commands = {
         }
 
 def pushChanges():
+    # show current path
+    print(f'[green]Current path: {os.getcwd()}')
     choose = tableMenu()
     if choose in ['1', '2', '3', '4', '5']:
         encryptFiles()
@@ -50,16 +52,21 @@ def gitModules():
                     path = line.split('=')[1].strip()
                     os.chdir(path)
                     if path == 'libs':
-                        if checkIfPushNeeded():
-                            pushChanges()
-                            os.chdir('..')
+                        if checkForGitDir():
+                            if checkIfPushNeeded():
+                                pushChanges()
+                                os.chdir('..')
+                            else:
+                                print('[red]No changes to commit')
+                                os.chdir('..')
                         else:
-                            print('[red]No changes to commit')
+                            print('[red]No git dir found')
                             os.chdir('..')
 
 def gitPush():
     if checkForGitDir():
         os.system('git status')
+        gitModules()
         if os.path.exists('.gpgrc'):
             if checkIfPushNeeded():
                 pushChanges()
