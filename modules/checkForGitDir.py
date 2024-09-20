@@ -1,5 +1,10 @@
 import os
+from rich import print
 
 
 def checkForGitDir():
-    return os.path.isdir('.git')
+    if os.path.isdir('.git'):
+        return True
+    else:
+        print('[red]This is not a git repository')
+        exit()

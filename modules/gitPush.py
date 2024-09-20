@@ -1,5 +1,4 @@
 import os
-import sys
 from rich import print
 from rich.prompt import Prompt
 
@@ -19,21 +18,11 @@ commands = {
         '5': 'core',
         }
 
-
-
-def gitPush():
-    args = sys.argv
-    args_str = ''
-
-    if len(args) > 1:
-        for i in range(1, len(args)):
-            args_str += args[i] + ' '
-
-    os.system('git status')
+def pushChanges():
     choose = tableMenu()
     if choose in ['1', '2', '3', '4', '5']:
         encryptFiles()
-        commit_message = args_str if args_str != '' else Prompt.ask("Commit message")
+        commit_message = Prompt.ask("Commit message")
         if commit_message == '':
             print('[red]Commit message is required')
             gitPush()
@@ -52,14 +41,19 @@ def gitPush():
             print('[red]Invalid option')
             gitPush()
 
-    if os.path.exists('.gpgrc'):
-        if checkIfPushNeeded():
-            gitPush()
-        else:
-            print('[red]No changes to commit')
-    else:
-        if checkForGitDir():
+
+def gitPush():
+    if checkForGitDir():
+        os.system('git status')
+        if os.path.exists('.gpgrc'):
             if checkIfPushNeeded():
-                gitPush()
+                pushChanges()
             else:
                 print('[red]No changes to commit')
+        else:
+            if checkIfPushNeeded():
+                pushChanges()
+            else:
+                print('[red]No changes to commit')
+
+
