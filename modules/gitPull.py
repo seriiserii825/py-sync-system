@@ -9,11 +9,9 @@ def pipInstall():
         os.system('source venv/bin/activate')
         os.system('python3 -m pip install --upgrade pip')
         os.system('python3 -m pip install -r requirements.txt')
-        os.system('deactivate')
     else:
         os.system('source venv/bin/activate')
         os.system('python3 -m pip install -r requirements.txt')
-        os.system('deactivate')
 
 def gitModules():
     os.system('git submodule init')
