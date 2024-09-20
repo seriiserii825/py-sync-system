@@ -17,7 +17,7 @@ def menu():
         ["[green]1) Sync[/]", "Sync all repositories."],
         ["[blue]2) Push[/]", "Push"],
         ["[yellow]3) Pull[/]", "Pull"],
-        ["[yellow]4) Clone[/]", "Clone"],
+        ["[green]4) Clone[/]", "Clone"],
     ]
     richTable(table_title, table_columns, table_rows)
     action = console.input("[cyan]What would you like to do? ")

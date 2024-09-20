@@ -9,8 +9,6 @@ def pip_install():
         subprocess.run(activate_venv, shell=True, check=True)
         subprocess.run([sys.executable, "-m", "pip", "install", "--upgrade", "pip"], check=True)
         subprocess.run([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"], check=True)
-        deactivate_venv = "deactivate"
-        subprocess.run(deactivate_venv, shell=True, check=True)
 
 def gitClone():
     clipboard = subprocess.check_output("xclip -o -selection clipboard", shell=True, text=True).strip()

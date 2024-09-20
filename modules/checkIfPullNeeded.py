@@ -1,22 +1,17 @@
-import subprocess
-def checkIfPullNeeded():
-    subprocess.run(['git', 'fetch'], check=True)
-    
-    # Check the status between local and remote
-    local_commit = subprocess.check_output(['git', 'rev-parse', '@'], text=True).strip()
-    remote_commit = subprocess.check_output(['git', 'rev-parse', '@{u}'], text=True).strip()
-    base_commit = subprocess.check_output(['git', 'merge-base', '@', '@{u}'], text=True).strip()
-
+import git
+from rich import print
+def checkIfPullNeeded(repo_path='.'):
+    # Open the repository
+    repo = git.Repo(repo_path)
+    # Fetch latest changes from the remote
+    repo.remotes.origin.fetch()
+    # Get the local and remote commit objects
+    local_commit = repo.head.commit
+    remote_commit = repo.remotes.origin.refs[repo.active_branch.name].commit
+    # Compare local and remote commits
     if local_commit == remote_commit:
-        print("Your branch is up to date with the remote.")
-        return False
-    elif local_commit == base_commit:
-        print("You need to pull the latest changes.")
-        return True
-    elif remote_commit == base_commit:
-        print("You have unpushed local changes.")
+        print("[red]Your branch is up to date with the remote.")
         return False
     else:
-        print("Your branch has diverged from the remote.")
+        print("[green]Pull needed. Your branch is behind the remote.")
         return True
-

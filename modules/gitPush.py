@@ -52,6 +52,7 @@ def gitModules():
                     path = line.split('=')[1].strip()
                     os.chdir(path)
                     if path == 'libs':
+                        print(f'[green]Current path: {os.getcwd()}')
                         if checkForGitDir():
                             if checkIfPushNeeded():
                                 pushChanges()
