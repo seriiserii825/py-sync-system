@@ -11,7 +11,13 @@ def checkIfPullNeeded():
         return False
     # Get the local and remote head commit hashes
     local_commit = subprocess.check_output(['git', 'rev-parse', 'HEAD']).strip()
+    if local_commit == b'':
+        print("[red]Error getting the local commit hash.")
+        return False
     remote_commit = subprocess.check_output(['git', 'rev-parse', '@{u}']).strip()
+    if remote_commit == b'':
+        print("[red]Error getting the remote commit hash.")
+        return False
 
     if local_commit == remote_commit:
         print("[red]Your branch is up to date with the remote.")
