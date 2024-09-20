@@ -41,6 +41,21 @@ def pushChanges():
             print('[red]Invalid option')
             gitPush()
 
+def gitModules():
+    if os.path.exists('.gitmodules'):
+        with open('.gitmodules') as f:
+            lines = f.readlines()
+            for line in lines:
+                if 'path' in line:
+                    path = line.split('=')[1].strip()
+                    os.chdir(path)
+                    if path == 'libs':
+                        if checkIfPushNeeded():
+                            pushChanges()
+                            os.chdir('..')
+                        else:
+                            print('[red]No changes to commit')
+                            os.chdir('..')
 
 def gitPush():
     if checkForGitDir():
@@ -55,5 +70,4 @@ def gitPush():
                 pushChanges()
             else:
                 print('[red]No changes to commit')
-
 
