@@ -18,13 +18,13 @@ commands = {
         '5': 'core',
         }
 
-def pushChanges():
+def pushChanges(commit_message_param = ''):
     # show current path
     print(f'[green]Current path: {os.getcwd()}')
     choose = tableMenu()
     if choose in ['1', '2', '3', '4', '5']:
         encryptFiles()
-        commit_message = Prompt.ask("Commit message")
+        commit_message = commit_message_param if commit_message_param != '' else Prompt.ask('Commit message: ')
         if commit_message == '':
             print('[red]Commit message is required')
             gitPush()
@@ -64,18 +64,18 @@ def gitModules():
                             print('[red]No git dir found')
                             os.chdir('..')
 
-def gitPush():
+def gitPush(commit_message = ''):
     if checkForGitDir():
         os.system('git status')
         gitModules()
         if os.path.exists('.gpgrc'):
             if checkIfPushNeeded():
-                pushChanges()
+                pushChanges(commit_message_param=commit_message)
             else:
                 print('[red]No changes to commit')
         else:
             if checkIfPushNeeded():
-                pushChanges()
+                pushChanges(commit_message_param=commit_message)
             else:
                 print('[red]No changes to commit')
 
