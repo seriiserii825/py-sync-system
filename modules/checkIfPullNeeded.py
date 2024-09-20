@@ -10,11 +10,18 @@ def checkIfPullNeeded():
         print("[red]Error fetching the latest changes from the remote.")
         return False
     # Get the local and remote head commit hashes
-    local_commit = subprocess.check_output(['git', 'rev-parse', 'HEAD']).strip()
-    if local_commit == b'':
+    try:
+        local_commit = subprocess.check_output(['git', 'rev-parse', 'HEAD']).strip()
+    except subprocess.CalledProcessError:
         print("[red]Error getting the local commit hash.")
         return False
-    remote_commit = subprocess.check_output(['git', 'rev-parse', '@{u}']).strip()
+
+    try:
+        remote_commit = subprocess.check_output(['git', 'rev-parse', '@{u}']).strip()
+    except subprocess.CalledProcessError:
+        print("[red]Error getting the remote commit hash.")
+        return False
+
     if remote_commit == b'':
         print("[red]Error getting the remote commit hash.")
         return False
