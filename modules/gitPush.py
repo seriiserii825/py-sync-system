@@ -50,8 +50,8 @@ def gitModules():
             for line in lines:
                 if 'path' in line:
                     path = line.split('=')[1].strip()
-                    os.chdir(path)
-                    if path == 'libs':
+                    if path == 'libs' and os.path.exists('libs'):
+                        os.chdir(path)
                         print(f'[green]Current path: {os.getcwd()}')
                         if checkForGitDir():
                             if checkIfPushNeeded():
@@ -63,6 +63,9 @@ def gitModules():
                         else:
                             print('[red]No git dir found')
                             os.chdir('..')
+                    else:
+                        print(f'[red]Path {path} not found')
+                        print(f'[green]Current path: {os.getcwd()}')
 
 def gitPush(commit_message = ''):
     if checkForGitDir():
