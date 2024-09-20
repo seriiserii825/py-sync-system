@@ -4,6 +4,7 @@ from rich.panel import Panel
 user = os.getlogin()
 def decryptFiles():
     if os.path.isfile('.gpgrc'):
+        print(f'[green]Decrypting files')
         with open('.gpgrc', 'r') as file:
             lines = file.readlines()
             for line in lines:
