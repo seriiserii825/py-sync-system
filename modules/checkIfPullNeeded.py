@@ -1,14 +1,13 @@
-import git
+import subprocess
 from rich import print
-def checkIfPullNeeded(repo_path='.'):
-    # Open the repository
-    repo = git.Repo(repo_path)
-    # Fetch latest changes from the remote
-    repo.remotes.origin.fetch()
-    # Get the local and remote commit objects
-    local_commit = repo.head.commit
-    remote_commit = repo.remotes.origin.refs[repo.active_branch.name].commit
-    # Compare local and remote commits
+def checkIfPullNeeded():
+    # Fetch the latest changes from the remote
+    subprocess.run(['git', 'fetch'], check=True)
+    
+    # Get the local and remote head commit hashes
+    local_commit = subprocess.check_output(['git', 'rev-parse', 'HEAD']).strip()
+    remote_commit = subprocess.check_output(['git', 'rev-parse', '@{u}']).strip()
+
     if local_commit == remote_commit:
         print("[red]Your branch is up to date with the remote.")
         return False
