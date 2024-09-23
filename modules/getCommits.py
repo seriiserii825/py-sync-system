@@ -3,23 +3,29 @@ import subprocess
 from datetime import datetime
 from rich import print
 from rich.panel import Panel
-def getCommits(file_path):
-    print('[blue]Pushing')
+def getCommits(file_path, projects=False):
+    lines = []
     with open(file_path, 'r') as f:
         for line in f:
             line = line.strip()
-            os.chdir(line)
-            today_date = datetime.today().strftime('%Y-%m-%d')
+            if projects:
+                if 'Local' in line:
+                    lines.append(line)
+                else:
+                    continue
+            else:
+                lines.append(line)
+    for line in lines:
+        os.chdir(line)
+        today_date = datetime.today().strftime('%Y-%m-%d')
+        # show user, time when commit was done, and commit message
+        command = [
+                "git", "log",
+                f'--since={today_date} 00:00:00', f'--until={today_date} 23:59:59',
+                '--pretty=format:%an: %cd: %s'
+                ]
+        result = subprocess.run(command, capture_output=True, text=True)
 
-            # show user, time when commit was done, and commit message
-            command = [
-                    "git", "log",
-                    f'--since={today_date} 00:00:00', f'--until={today_date} 23:59:59',
-                    '--pretty=format:%an: %cd: %s'
-                    ]
-            result = subprocess.run(command, capture_output=True, text=True)
-
-            if result.stdout:
-                #color result.stdout
-                print(Panel(f"[green]{result.stdout}", title=line))
-
+        if result.stdout:
+            #color result.stdout
+            print(Panel(f"[green]{result.stdout}", title=line))

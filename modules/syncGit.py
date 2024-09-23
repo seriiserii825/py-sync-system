@@ -15,18 +15,21 @@ def syncGit():
     table_title = "Git Repository Manager"
     table_columns = ["Option", "Description"]
     table_rows = [
-        ["[green]commits[/]", "Push changes to the remote repository."],
-        ["[blue]push[/]", "Push changes to the remote repository."],
-        ["[red]pull[/]", "Pull changes from the remote repository."]
+        ["1) [blue]push[/]", "Push changes to the remote repository."],
+        ["2) [red]pull[/]", "Pull changes from the remote repository."],
+        ["3) [green]commits_all[/]", "Push changes to the remote repository."],
+        ["4) [blue]commits_projects[/]", "Push changes to the remote repository."],
     ]
     richTable(table_title, table_columns, table_rows)
     action = console.input("[cyan]What would you like to do? ")
-    if action == "push":
+    if action == "1":
         gitPushAll(file_path)
-    elif action == "pull":
+    elif action == "2":
         gitPullAll(file_path)
-    elif action == "commits":
+    elif action == "3":
         getCommits(file_path)
+    elif action == "4":
+        getCommits(file_path, projects=True)
     else:
         console.print("[red]Invalid option. Please try again.")
         exit()
