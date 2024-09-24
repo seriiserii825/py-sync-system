@@ -1,5 +1,6 @@
 import os
 from rich import print
+from rich.panel import Panel
 from rich.prompt import Prompt
 
 from modules.checkForGitDir import checkForGitDir
@@ -68,6 +69,7 @@ def gitModules():
                         print(f'[green]Current path: {os.getcwd()}')
 
 def gitPush(commit_message = ''):
+    print(Panel(f"Pushing from {os.getcwd()}", title="Git Push", style="blue"))
     if checkForGitDir():
         os.system('git status')
         gitModules()

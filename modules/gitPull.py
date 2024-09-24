@@ -2,6 +2,7 @@ import os
 from rich import print
 from modules.checkForGitDir import checkForGitDir
 from modules.checkIfPullNeeded import checkIfPullNeeded
+from rich.panel import Panel
 
 def pipInstall():
     if not os.path.exists('venv'):
@@ -33,6 +34,7 @@ def gitModules():
                     os.chdir('..')
 
 def gitPull():
+    print(Panel(f"Pulling from {os.getcwd()}", title="Git Pull", style="blue"))
     if checkForGitDir():
         # check for gitmodules
         if os.path.exists('.gitmodules'):
