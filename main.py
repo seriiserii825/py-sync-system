@@ -25,22 +25,21 @@ def menu():
     table_title = "Choose an option"
     table_columns = ["Option", "Description"]
     table_rows = [
-        ["[green]1) Sync[/]", "Sync all repositories."],
-        ["[blue]2) Push[/]", "Push"],
-        ["[yellow]3) Pull[/]", "Pull"],
+        ["[blue]1) Push[/]", "Push"],
+        ["[green]2) Pull[/]", "Pull"],
+        ["[yellow]3) Sync[/]", "Sync all repositories."],
         ["[green]4) Clone[/]", "Clone"],
     ]
     richTable(table_title, table_columns, table_rows)
     action = console.input("[cyan]What would you like to do? ")
     if action == "1":
-        syncGit()
-    elif action == "2":
         gitPush(commit_message)
-    elif action == "3":
+    elif action == "2":
         gitPull()
+    elif action == "3":
+        syncGit()
     elif action == "4":
         gitClone()
     else:
-        console.print("[red]Invalid option. Please try again.")
-        exit()
+        gitPush(commit_message)
 menu()
