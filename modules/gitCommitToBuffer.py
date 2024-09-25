@@ -1,4 +1,5 @@
 import subprocess
+# from plyer import notification
 def gitCommitToBuffer():
     # log=$(git log --since="3am" --pretty=tformat:"%s" --reverse > log.log);
     # sed -i 's/feat://' log.log
@@ -16,4 +17,10 @@ def gitCommitToBuffer():
                 "xclip", "-selection", "clipboard"
                 ]
         result = subprocess.run(command, input=result.stdout, text=True)
+        print("[blue]Commits copied to clipboard.")
+        # notification.notify(
+        #         title="Commits copied to clipboard.",
+        #         message=result.stdout,
+        #         timeout=10
+        #         )
 

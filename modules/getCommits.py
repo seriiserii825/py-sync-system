@@ -4,6 +4,7 @@ from datetime import datetime
 from rich import print
 from rich.panel import Panel
 
+from libs.selectWithFzf import selectWithFzf
 from modules.getLocalProjects import getLocalProjects
 from modules.gitCommitToBuffer import gitCommitToBuffer
 def getCommits(file_path, projects=False):
@@ -32,9 +33,24 @@ def getCommits(file_path, projects=False):
             print(Panel(f"[green]{result.stdout}", title=line))
     copy_to_buffer = input("Would you like to copy the commits to the clipboard? [y/n] ")
     if copy_to_buffer.lower() == 'y':
-        for line in today_projects:
-            print(Panel(f"[blue]Changing directory to {line}"))
-            os.chdir(line)
-            gitCommitToBuffer()
-            input("Press Enter to continue...")
+        continue_commits = True
+        while continue_commits:
+            themes = []
+            for line in today_projects:
+                print(f"line: {line}")
+                theme = line.split('/')[-2]
+                print(f"theme: {theme}")
+                themes.append(theme)
+            choosed_theme = selectWithFzf(themes)
+            print(f"choosed_theme: {choosed_theme}")
+            for line in today_projects:
+                if choosed_theme in line:
+                    print(Panel(f"[blue]Changing directory to {line}"))
+                    os.chdir(line)
+                    gitCommitToBuffer()
+                    continue_commits = input("Would you like to copy another commit to the clipboard? [y/n] ")
+                    if continue_commits.lower() == 'n':
+                        continue_commits = False
+                        print("[red]Exiting...")
+                        exit()
 
