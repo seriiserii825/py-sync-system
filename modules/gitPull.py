@@ -4,6 +4,8 @@ from modules.checkForGitDir import checkForGitDir
 from modules.checkIfPullNeeded import checkIfPullNeeded
 from rich.panel import Panel
 
+from utils.decryptFiles import decryptFiles
+
 def gitModules():
     os.system('git submodule init')
     os.system('git submodule update')
@@ -30,5 +32,6 @@ def gitPull():
         result = checkIfPullNeeded()
         if result:
             os.system('git pull')
+            decryptFiles()
 
 

@@ -11,6 +11,5 @@ def decryptFiles():
                 line = line.replace('\n', '')
                 print(Panel(f'[blue]decrypt line: {line}'))
                 file_without_gpg = line.replace('.gpg', '')
-                if(os.path.exists(file_without_gpg)):
-                    os.system(f'rm {file_without_gpg}')
-                    os.system(f'gpg -d {line} > {file_without_gpg}')
+                os.system(f'rm {file_without_gpg}')
+                os.system(f'gpg -d {line} > {file_without_gpg}')

@@ -25,9 +25,7 @@ def encryptFiles():
                 print(f"file_without_gpg: {file_without_gpg}")
                 if os.path.isfile(line):
                     os.system(f'rm {line}')
-                # os.system(f'git rm --cached {file_without_gpg}')
                 removeFileFromGitCache(file_path=file_without_gpg)
                 addToGitIgnore(file_without_gpg)
-                if not os.path.isfile(line):
-                    file_without_gpg = line.replace('.gpg', '')
-                    os.system(f'gpg -e -r {user} {file_without_gpg}')
+                file_without_gpg = line.replace('.gpg', '')
+                os.system(f'gpg -e -r {user} {file_without_gpg}')
