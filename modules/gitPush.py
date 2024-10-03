@@ -24,7 +24,6 @@ def pushChanges(commit_message_param = ''):
     print(f'[green]Current path: {os.getcwd()}')
     choose = tableMenu()
     if choose in ['1', '2', '3', '4', '5']:
-        encryptFiles()
         commit_message = commit_message_param if commit_message_param != '' else Prompt.ask('Commit message: ')
         if commit_message == '':
             print('[red]Commit message is required')
@@ -74,6 +73,7 @@ def gitPush(commit_message = ''):
         os.system('git status')
         gitModules()
         if os.path.exists('.gpgrc'):
+            encryptFiles()
             if checkIfPushNeeded():
                 pushChanges(commit_message_param=commit_message)
             else:
